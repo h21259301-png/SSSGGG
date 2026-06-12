@@ -10,13 +10,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-        /* 1. 디자인 시스템 & 가상 배경 설정 */
+        /* 1. 디자인 시스템 & 전체 배경 설정 */
         :root {
             --primary: #1b4332;       /* 깊은 숲색 */
             --secondary: #40916c;     /* 나뭇잎색 */
             --accent: #2d6a4f;        /* 포인트 그린 */
-            --bg-light: #f4f7f5;      /* 앱 배경색 */
-            --card-bg: rgba(255, 255, 255, 0.92); /* 반투명 화이트 (배경 투과용) */
+            --bg-light: rgba(244, 247, 245, 0.94); /* 앱 내부 배경색 (투명도 조절로 배경 투과) */
+            --card-bg: #ffffff;
             --text: #2d3436;
         }
 
@@ -28,42 +28,42 @@
         }
 
         body {
-            background-color: #e9f0ea;
+            /* 자연을 상징하는 은은한 숲 배경 이미지 적용 */
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('http://googleusercontent.com/image_collection/image_retrieval/1931709421788544824') no-repeat center center fixed;
+            background-size: cover;
             color: var(--text);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
-            /* 자연/동물 느낌을 주는 부드러운 그래픽 배경 장식 */
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(64, 145, 108, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(45, 106, 79, 0.15) 0%, transparent 50%);
         }
 
-        /* 2. 웹 앱 메인 컨테이너 (스마트 디스플레이 프레임) */
+        /* 2. 웹 앱 메인 컨테이너 */
         .app-container {
             background: var(--bg-light);
             width: 100%;
-            max-width: 1200px;
-            height: 800px;
+            max-width: 1240px;
+            height: 820px;
             border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(27, 67, 50, 0.15);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
             display: flex;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.5);
+            backdrop-filter: blur(10px); /* 소프트 블러 처리로 세련된 UI 연출 */
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
-        /* 3. 사이드바 내비게이션 (앱의 핵심 메뉴) */
+        /* 3. 사이드바 내비게이션 */
         .sidebar {
             background-color: var(--primary);
-            width: 280px;
+            width: 290px;
             height: 100%;
-            padding: 40px 20px;
+            padding: 40px 25px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             color: white;
+            flex-shrink: 0;
         }
 
         .brand h1 {
@@ -78,6 +78,7 @@
             font-size: 13px;
             opacity: 0.7;
             margin-bottom: 40px;
+            line-height: 1.4;
         }
 
         .menu-list {
@@ -101,7 +102,9 @@
         }
 
         .menu-item i {
-            font-size: 20px;
+            font-size: 18px;
+            width: 20px;
+            text-align: center;
         }
 
         .menu-item:hover, .menu-item.active {
@@ -116,19 +119,19 @@
             text-align: center;
         }
 
-        /* 4. 메인 콘텐츠 영역 (화면 전환이 일어나는 곳) */
+        /* 4. 메인 콘텐츠 영역 */
         .main-content {
             flex-grow: 1;
             height: 100%;
-            padding: 50px;
+            padding: 45px;
             overflow-y: auto;
             position: relative;
         }
 
-        /* 앱 화면 전환 효과를 위한 클래스 */
+        /* 앱 화면 전환 효과 */
         .app-page {
             display: none;
-            animation: fadeIn 0.5s ease forwards;
+            animation: fadeIn 0.4s ease forwards;
         }
 
         .app-page.active {
@@ -136,19 +139,19 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 5. 앱 내부 컴포넌트 (카드 및 장식) 스타일 */
+        /* 5. 컴포넌트 내부 타이틀 및 카드 구성 */
         .page-header {
-            margin-bottom: 35px;
-            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgba(0,0,0,0.08);
             padding-bottom: 15px;
         }
 
         .page-header h2 {
-            font-size: 32px;
+            font-size: 30px;
             color: var(--primary);
             display: flex;
             align-items: center;
@@ -157,7 +160,7 @@
 
         .grid-layout {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
             margin-top: 20px;
         }
@@ -165,51 +168,55 @@
         .app-card {
             background: var(--card-bg);
             border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
-            border: 1px solid #e6ebe7;
-            transition: transform 0.3s;
+            overflow: hidden; /* 이미지 라운딩용 */
+            box-shadow: 0 6px 15px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
 
         .app-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(40, 145, 108, 0.1);
+            box-shadow: 0 12px 25px rgba(27, 67, 50, 0.12);
+        }
+
+        /* 카드 상단 이미지 썸네일 */
+        .card-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .card-body {
+            padding: 25px;
+            flex-grow: 1;
         }
 
         .app-card h3 {
             color: var(--accent);
             margin-bottom: 12px;
-            font-size: 20px;
+            font-size: 19px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
         .app-card p {
-            font-size: 15px;
+            font-size: 14.5px;
             line-height: 1.6;
             color: #555;
         }
 
         .highlight-box {
-            background: #e8f5e9;
+            background: rgba(232, 245, 229, 0.8);
             border-left: 5px solid var(--secondary);
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 25px;
             font-weight: 500;
-        }
-
-        /* 야생동물 실루엣 배경 장식 (우측 하단 고정 고화질 이미지 대체) */
-        .deco-animal {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            width: 220px;
-            height: 220px;
-            opacity: 0.12;
-            pointer-events: none;
-            background: url('http://googleusercontent.com/image_collection/image_retrieval/3590410594156440722') no-repeat center/contain;
+            line-height: 1.6;
         }
     </style>
 </head>
@@ -243,23 +250,28 @@
         </nav>
 
         <main class="main-content">
-            <div class="deco-animal"></div>
 
             <div id="intro" class="app-page active">
                 <div class="page-header">
                     <h2><i class="fa-solid fa-compass"></i> 진로 탐색: 동물학과</h2>
                 </div>
                 <div class="highlight-box">
-                    "동물학(Zoology)은 지구상에 존재하는 모든 동물의 구조, 행동, 유전, 그리고 환경과의 상호작용을 과학적으로 규명하여 인류와 동물의 건강한 공존을 설계하는 미래 학문입니다."
+                    "동물학(Zoology)은 지구상에 존재하는 모든 동물의 구조, 행동, 유전, 그리고 환경과의 상호작용을 과학적으로 규명하여 인류와 동물의 건강한 공존을 설계하는 미래 핵심 과학입니다."
                 </div>
                 <div class="grid-layout">
                     <div class="app-card">
-                        <h3><i class="fa-solid fa-magnifying-glass"></i> 주요 연구 방향</h3>
-                        <p>동물행동학, 동물생리학, 분자계통분류학, 그리고 야생동물 서식지 복원을 위한 보전생물학을 깊이 있게 연구합니다.</p>
+                        <img src="http://googleusercontent.com/image_collection/image_retrieval/10915784990132491026" alt="동물학 연구" class="card-image">
+                        <div class="card-body">
+                            <h3><i class="fa-solid fa-magnifying-glass"></i> 주요 연구 방향</h3>
+                            <p>동물행동학, 동물생리학, 분자계통분류학을 비롯해 야생동물 서식지 복원 및 종을 보전하는 보전생물학을 심도 있게 다룹니다.</p>
+                        </div>
                     </div>
                     <div class="app-card">
-                        <h3><i class="fa-solid fa-graduation-cap"></i> 진출 분야</h3>
-                        <p>국립생태원 및 국립공원공단 연구원, 야생동물 구조 및 치료 전문가, 기후변화 대응 생태계 모니터링 요원, 바이오 의학 연구원 등</p>
+                        <img src="http://googleusercontent.com/image_collection/image_retrieval/472579854409986020" alt="야생동물 조사" class="card-image">
+                        <div class="card-body">
+                            <h3><i class="fa-solid fa-graduation-cap"></i> 주요 진출 분야</h3>
+                            <p>국립생태원 및 국립공원공단 연구원, 야생동물 구조·치료 전문가, 생태계 생물다양성 모니터링 연구원, 바이오 연구소 등에서 활약합니다.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -268,19 +280,27 @@
                 <div class="page-header">
                     <h2><i class="fa-solid fa-heart-pulse"></i> 생명과학 Ⅰ 교과 연계 안내</h2>
                 </div>
-                <p style="margin-bottom: 20px;">고등학교 2학년 과정의 생명과학 Ⅰ 핵심 이론은 동물의 생명 현상을 이해하는 완벽한 뼈대가 됩니다.</p>
+                <div class="highlight-box">
+                    생명과학 Ⅰ에서 다루는 신체 조절 이론과 환경 생태 개념은 거시적인 동물 연구 및 생태 관찰의 훌륭한 학문적 기반이 됩니다.
+                </div>
                 <div class="grid-layout">
                     <div class="app-card">
-                        <h3>항상성과 몸의 조절</h3>
-                        <p>동물의 내분비계와 신경계 상호작용을 분석합니다. 자극에 따른 동물의 투쟁-도피 반응이나 호르몬 분비 기작은 동물행동학 연구의 기초가 됩니다.</p>
+                        <div class="card-body">
+                            <h3>항상성과 몸의 조절</h3>
+                            <p>동물의 내분비계와 신경계 상호작용을 분석합니다. 특정 환경 자극에 대응하는 야생 동물의 항상성 유지 기작과 스트레스성 반응은 동물행동학의 기본 뼈대가 됩니다.</p>
+                        </div>
                     </div>
                     <div class="app-card">
-                        <h3>방어 작용 (면역)</h3>
-                        <p>동물의 생체 방어 체계를 배웁니다. 이는 야생동물과 인간 모두의 안전을 지키는 '원 헬스(One Health)' 감염병 방역 연구로 확장됩니다.</p>
+                        <div class="card-body">
+                            <h3>방어 작용 (면역)</h3>
+                            <p>동물의 자체 생체 방어 시스템을 학습합니다. 야생동물 집단의 고유 면역 체계를 연구함으로써 인류와 동물 모두를 위협하는 감염병 차단 연구로 확장할 수 있습니다.</p>
+                        </div>
                     </div>
                     <div class="app-card">
-                        <h3>생태계와 상호 작용</h3>
-                        <p>개체군과 군집의 특성, 상호작용(경쟁, 공생 등)을 학습하며 멸종위기 야생동물의 서식지 보전 모델을 설계하는 밑바탕이 됩니다.</p>
+                        <div class="card-body">
+                            <h3>생태계와 상호 작용</h3>
+                            <p>개체군과 군집 내에서 나타나는 생물 간의 상호작용(경쟁, 공생 등)과 환경 요인을 연계하여, 멸종위기 야생 동물의 최적 서식지 환경 모델을 도출해냅니다.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -289,14 +309,22 @@
                 <div class="page-header">
                     <h2><i class="fa-solid fa-helix"></i> 생명과학 Ⅱ 심화 연계 안내</h2>
                 </div>
+                <div class="highlight-box">
+                    유전학 및 진화와 관련된 미시적 세포 분자 생물학 개념은 현대 동물학에서 가장 주목받는 연구 기술과 직결되어 있습니다.
+                </div>
                 <div class="grid-layout">
                     <div class="app-card">
-                        <h3>유전 물질과 유전공학</h3>
-                        <p>DNA 구조와 복제, 생명공학 기술(PCR, 유전자 가위)을 다룹니다. 현대 동물학에서 멸종위기종의 유전적 다양성을 분석하고 계통수를 정밀 분석할 때 필수적으로 활용되는 기술입니다.</p>
+                        <img src="http://googleusercontent.com/image_collection/image_retrieval/8308592389209024569" alt="DNA 분석" class="card-image">
+                        <div class="card-body">
+                            <h3>유전 물질과 유전공학 기술</h3>
+                            <p>DNA 구조와 생명공학 기술(PCR, 염기서열 분석 등)을 다룹니다. 이는 유전적 보전 가치가 높은 고유종 분석이나 멸종위기 야생 동물의 복원 프로젝트 시 개체군의 유전 다양성 지표를 측정하는 핵심 도구입니다.</p>
+                        </div>
                     </div>
                     <div class="app-card">
-                        <h3>생물의 진화와 다양성</h3>
-                        <p>동물계의 분류학적 특징(척삭동물, 절지동물 등 포괄)과 하디-바인베르크 법칙을 학습하여, 특정 야생동물 집단의 진화적 경로와 유전자 풀 변화를 수학적으로 예측합니다.</p>
+                        <div class="card-body">
+                            <h3>생물의 진화와 다양성</h3>
+                            <p>동물계의 분류학적 계통 연구와 하디-바인베르크 법칙을 학습합니다. 특정 야생 동물의 유전자 풀(Pool) 변화 추이를 수학적·생물학적으로 계산하고, 진화의 경로를 추적하는 연구로 연계됩니다.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -305,15 +333,19 @@
                 <div class="page-header">
                     <h2><i class="fa-solid fa-flask"></i> 동물학 연계 탐구 프로젝트 디렉터리</h2>
                 </div>
-                <p style="margin-bottom: 20px;">생명과학 교과 지식을 하드웨어 공학, 환경 설계와 결합한 융합 탐구 예시입니다.</p>
                 <div class="grid-layout">
                     <div class="app-card">
-                        <h3>[프로젝트 1] 원 헬스 기반 방역 시스템</h3>
-                        <p>생명과학 Ⅰ의 면역 및 생태계 개념을 응용하여 야생동물과 가축 환경의 인수공통감염병 경로를 시뮬레이션하고 통합적 방역 패러다임을 제안합니다.</p>
+                        <img src="http://googleusercontent.com/image_collection/image_retrieval/5360124122321565524" alt="원헬스 방역 개념" class="card-image">
+                        <div class="card-body">
+                            <h3>[주제 1] 원 헬스(One Health) 방역 패러다임</h3>
+                            <p>생명과학 Ⅰ의 방어 작용 및 생태계 개념을 융합하여 야생동물-가축-인간 환경 간의 밀접한 감염병 연결 고리를 추적하고, 이를 차단하기 위한 예방적 통합 방역 프로세스를 설계합니다.</p>
+                        </div>
                     </div>
                     <div class="app-card">
-                        <h3>[프로젝트 2] 템플 그랜딘 행동학 기반 장치</h3>
-                        <p>동물의 '자극과 반응' 메커니즘을 고려하여 사육 동물의 정형행동(스트레스 반응)을 예방하는 스마트 환경 제어 및 행동 풍부화 장치를 기획합니다.</p>
+                        <div class="card-body">
+                            <h3>[주제 2] 템플 그랜딘 기반 행동풍부화 설계</h3>
+                            <p>교과서 속 동물의 '자극과 반응' 원리를 구조화하여 사육 환경 내 동물들의 정형행동 및 스트레스를 효과적으로 완화해 주는 공학적 제어 장치나 환경 다각화(행동풍부화) 방안을 연구합니다.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -333,7 +365,7 @@
             // 3. 선택한 페이지 및 메뉴 아이템 활성화
             document.getElementById(pageId).classList.add('active');
             
-            // 이벤트가 발생한 메뉴 타겟을 찾아 active 추가
+            // 클릭된 대상을 찾아 메뉴 스타일 동적 변경
             const eventTarget = event.currentTarget;
             if(eventTarget) {
                 eventTarget.classList.add('active');
